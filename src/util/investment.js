@@ -22,10 +22,10 @@ export function calculateInvestmentResults({
   return annualData;
 }
 
-// Objeto para formatar valores numéricos no padrão de moeda BRL (ou USD)
-export const formatter = new Intl.NumberFormat('pt-BR', {
+// Objeto para formatar valores numéricos em dólares americanos, sem casas decimais
+export const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
-  currency: 'BRL',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });

@@ -1,17 +1,6 @@
 import { calculateInvestmentResults, formatter } from '../util/investment'
 
 export default function Results({ input }) {
-  // Task 10: Validação da duração com renderização condicional
-  const inputIsValid = input.duration >= 1
-
-  if (!inputIsValid) {
-    return (
-      <p className="center">
-        Por favor, insira uma duração maior que zero.
-      </p>
-    )
-  }
-
   const resultsData = calculateInvestmentResults(input)
   const initialInvestment =
     resultsData[0].valueEndOfYear -
