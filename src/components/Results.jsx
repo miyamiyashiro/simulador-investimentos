@@ -1,12 +1,15 @@
 import { calculateInvestmentResults, formatter } from '../util/investment'
 
 export default function Results({ input }) {
-  if (input.duration < 1) {
-    return <p className="center">Por favor, insira uma duração maior que zero.</p>
+  // Executa o cálculo com os dados do estado
+  const resultsData = calculateInvestmentResults(input)
+
+  // Se não houver dados, não renderiza a tabela
+  if (resultsData.length === 0) {
+    return null
   }
 
-  // Executa a função do utilitário
-  const resultsData = calculateInvestmentResults(input)
+  // Calcula o investimento inicial baseando-se no primeiro ano
   const initialInvestment =
     resultsData[0].valueEndOfYear -
     resultsData[0].interest -
@@ -25,6 +28,7 @@ export default function Results({ input }) {
       </thead>
       <tbody>
         {resultsData.map((yearData) => {
+          // Cálculos acumulados para cada ano
           const totalInterest =
             yearData.valueEndOfYear -
             yearData.annualInvestment * yearData.year -
@@ -34,7 +38,6 @@ export default function Results({ input }) {
           return (
             <tr key={yearData.year}>
               <td>{yearData.year}</td>
-              {/* Utiliza o formatter importado de util/investment.js */}
               <td>{formatter.format(yearData.valueEndOfYear)}</td>
               <td>{formatter.format(yearData.interest)}</td>
               <td>{formatter.format(totalInterest)}</td>
