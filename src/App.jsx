@@ -4,7 +4,6 @@ import UserInput from './components/UserInput.jsx'
 import Results from './components/Results.jsx'
 
 function App() {
-  // Estado elevado no componente pai
   const [userInput, setUserInput] = useState({
     initialInvestment: 10000,
     annualInvestment: 1200,
@@ -16,7 +15,8 @@ function App() {
     setUserInput((prevUserInput) => {
       return {
         ...prevUserInput,
-        [inputIdentifier]: +newValue, // O '+' garante a conversão de string para número
+        // O operador '+' garante a conversão de String para Number (Task 06)
+        [inputIdentifier]: +newValue,
       }
     })
   }
@@ -24,9 +24,7 @@ function App() {
   return (
     <>
       <Header />
-      {/* Conecta o formulário passando o estado e a função de alteração */}
       <UserInput userInput={userInput} onChange={handleChange} />
-      {/* Conecta a tabela de resultados passando o estado atualizado */}
       <Results input={userInput} />
     </>
   )
