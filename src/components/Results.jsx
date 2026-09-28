@@ -1,4 +1,48 @@
+import { calculateInvestmentResults, formatter } from '../util/investment'
+
 export default function Results({ input }) {
-  console.log(JSON.stringify(input));
-  return <p className="center">Results...</p>;
+  if (input.duration < 1) {
+    return <p className="center">Por favor, insira uma duração maior que zero.</p>
+  }
+
+  // Executa a função do utilitário
+  const resultsData = calculateInvestmentResults(input)
+  const initialInvestment =
+    resultsData[0].valueEndOfYear -
+    resultsData[0].interest -
+    resultsData[0].annualInvestment
+
+  return (
+    <table id="result">
+      <thead>
+        <tr>
+          <th>Ano</th>
+          <th>Valor do Investimento</th>
+          <th>Juros (Ano)</th>
+          <th>Total de Juros</th>
+          <th>Capital Investido</th>
+        </tr>
+      </thead>
+      <tbody>
+        {resultsData.map((yearData) => {
+          const totalInterest =
+            yearData.valueEndOfYear -
+            yearData.annualInvestment * yearData.year -
+            initialInvestment
+          const totalAmountInvested = yearData.valueEndOfYear - totalInterest
+
+          return (
+            <tr key={yearData.year}>
+              <td>{yearData.year}</td>
+              {/* Utiliza o formatter importado de util/investment.js */}
+              <td>{formatter.format(yearData.valueEndOfYear)}</td>
+              <td>{formatter.format(yearData.interest)}</td>
+              <td>{formatter.format(totalInterest)}</td>
+              <td>{formatter.format(totalAmountInvested)}</td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
 }
